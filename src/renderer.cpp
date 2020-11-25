@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#define BGM_PATH "../music/bgm_maoudamashii_8bit07.wav"
+
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
                    const std::size_t grid_width, const std::size_t grid_height)
@@ -20,7 +22,7 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cout << "failed to open audio: " << Mix_GetError() << "\n";
   }
 
-  backgroundSound = Mix_LoadMUS("../music/bgm_maoudamashii_8bit07.wav");
+  backgroundSound = Mix_LoadMUS(BGM_PATH);
   if (!backgroundSound)
   {
     std::cout << "failed to load music: " << Mix_GetError() << "\n";
