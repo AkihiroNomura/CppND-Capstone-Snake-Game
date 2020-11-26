@@ -28,7 +28,7 @@ class Game {
   int score{0};
 
   void PlaceFood();
-  void Update(Controller &controller);
+  void Update(Controller &controller, Renderer &renderer);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "game.h"
 #include <iostream>
+#include <thread>
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
@@ -26,7 +27,7 @@ void Game::Run(Controller &controller, Renderer &renderer, Bgm &bgm,
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
-    Update(controller);
+    Update(controller, renderer);
     renderer.Render(snake, food);
 
     frame_end = SDL_GetTicks();
@@ -69,10 +70,15 @@ void Game::PlaceFood() {
   }
 }
 
-void Game::Update(Controller &controller) {
+void Game::Update(Controller &controller, Renderer &renderer) {
   if (!snake.alive) return;
 
-  if (controller.IsPaused()) return;
+  if (controller.IsPaused())
+  {
+    std::this_thread::sleep_for(std::chrono::microseconds(100));
+    renderer.UpdateWindowTitleForPausing();
+    return;
+  }
 
   snake.Update();
 
