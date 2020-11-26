@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 
-#define BGM_PATH "../music/bgm_maoudamashii_8bit07.wav"
-
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
                    const std::size_t grid_width, const std::size_t grid_height)
@@ -12,23 +10,10 @@ Renderer::Renderer(const std::size_t screen_width,
       grid_width(grid_width),
       grid_height(grid_height) {
   // Initialize SDL
-  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "SDL could not initialize.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
-
-  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-  {
-    std::cout << "failed to open audio: " << Mix_GetError() << "\n";
-  }
-
-  backgroundSound = Mix_LoadMUS(BGM_PATH);
-  if (!backgroundSound)
-  {
-    std::cout << "failed to load music: " << Mix_GetError() << "\n";
-  }
-
-  Mix_PlayMusic(backgroundSound, -1);
 
   // Create Window
   sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
@@ -49,8 +34,6 @@ Renderer::Renderer(const std::size_t screen_width,
 }
 
 Renderer::~Renderer() {
-  Mix_FreeMusic(backgroundSound);
-  Mix_CloseAudio();
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
 }
