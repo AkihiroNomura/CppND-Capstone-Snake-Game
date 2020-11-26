@@ -35,7 +35,16 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
           ChangeDirection(snake, Snake::Direction::kRight,
                           Snake::Direction::kLeft);
           break;
+
+        // If you press the space button, the game will pause.
+        case SDLK_SPACE:
+          (!paused) ? paused = true : paused = false;
       }
     }
   }
+}
+
+bool Controller::IsPaused()
+{
+  return paused;
 }
