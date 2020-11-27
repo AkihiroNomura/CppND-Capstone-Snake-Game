@@ -3,6 +3,20 @@
 #include <thread>
 #include "SDL.h"
 
+void CountdownTimer60Seconds(bool &running)
+{
+  std::cout << "-------- Start Timer --------\n";
+  int count = 60;
+  while (count > 0)
+  {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::cout << count << "\n";
+    count--;
+  }
+  std::cout << "-------- End Timer --------\n";
+  running = false;
+}
+
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
       engine(dev()),
@@ -25,6 +39,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
   if (pressed_button_number != 0) return;
 
   bgm.PlayBgm();
+  std::thread t1(CountdownTimer60Seconds, std::ref(running));
 
   while (running) {
     frame_start = SDL_GetTicks();
@@ -56,6 +71,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
     }
   }
 
+  t1.join();
   bgm.StopBgm();
 }
 
@@ -79,7 +95,7 @@ void Game::Update(Controller &controller, Renderer &renderer) {
 
   if (controller.IsPaused())
   {
-    std::this_thread::sleep_for(std::chrono::microseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     renderer.UpdateWindowTitleForPausing();
     return;
   }
