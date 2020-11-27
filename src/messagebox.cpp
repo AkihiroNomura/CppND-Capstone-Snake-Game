@@ -5,10 +5,10 @@ MessageBox::MessageBox()
 {
   colorScheme = {
     {
-      {255, 0, 0},
-      {0, 255, 0},
-      {255, 255, 0},
-      {255, 0, 255}
+      {100, 100, 255},  /* [SDL_MESSAGEBOX_COLOR_BACKGROUND] */
+      {0, 0, 0},      /* [SDL_MESSAGEBOX_COLOR_TEXT] */
+      {255, 255, 0},    /* [SDL_MESSAGEBOX_COLOR_BUTTON_BORDER] */
+      {255, 255, 255}     /* [SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED] */
     }
   };
 }
