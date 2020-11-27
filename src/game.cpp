@@ -11,7 +11,8 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
   PlaceFood();
 }
 
-void Game::Run(Controller &controller, Renderer &renderer, Bgm &bgm,
+void Game::Run(Controller &controller, Renderer &renderer,
+               Bgm &bgm, MessageBox &messagebox,
                std::size_t target_frame_duration) {
   Uint32 title_timestamp = SDL_GetTicks();
   Uint32 frame_start;
@@ -19,6 +20,9 @@ void Game::Run(Controller &controller, Renderer &renderer, Bgm &bgm,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+
+  int pressed_button_number = messagebox.ShowScreen();
+  if (pressed_button_number != 0) return;
 
   bgm.PlayBgm();
 

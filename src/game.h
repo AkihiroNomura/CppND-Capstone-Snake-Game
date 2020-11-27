@@ -7,11 +7,13 @@
 #include "renderer.h"
 #include "snake.h"
 #include "bgm.h"
+#include "messagebox.h"
 
 class Game {
  public:
   Game(std::size_t grid_width, std::size_t grid_height);
-  void Run(Controller &controller, Renderer &renderer, Bgm &bgm,
+  void Run(Controller &controller, Renderer &renderer,
+           Bgm &bgm, MessageBox &messagebox,
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
