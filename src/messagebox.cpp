@@ -1,5 +1,6 @@
 #include "messagebox.h"
 #include <iostream>
+#include <string>
 
 MessageBox::MessageBox()
 {
@@ -20,11 +21,13 @@ int MessageBox::ShowScreen()
     { SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Quit" },
   };
 
+  std::string msg = "This game is for Udacity C++ Capstone project:)";
+
   message_box_data = {
     SDL_MESSAGEBOX_INFORMATION,
     NULL,
-    "Start",
-    "Press button",
+    "Start Snake Game",
+    msg.c_str(),
     SDL_arraysize(buttons),
     buttons,
     &colorScheme
