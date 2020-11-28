@@ -21,7 +21,7 @@ int MessageBox::ShowScreen()
     { SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 1, "Quit" },
   };
 
-  std::string msg = "This game is for Udacity C++ Capstone project:)";
+  std::string msg = "This game is for Udacity C++ Capstone project:). \nYou can play this game for 60 seconds.";
 
   message_box_data = {
     SDL_MESSAGEBOX_INFORMATION,
