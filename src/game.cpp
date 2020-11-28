@@ -3,18 +3,34 @@
 #include <thread>
 #include "SDL.h"
 
+struct thread_aborted{};
+std::atomic<bool> exit_flag(false);
+
+void CheckExitFlag() {
+  if (exit_flag) throw thread_aborted{};
+}
+
+void StopCountdownTimerThread() {
+  exit_flag = true;
+}
+
 void CountdownTimer60Seconds(bool &running)
 {
-  std::cout << "-------- Start Timer --------\n";
-  int count = 60;
-  while (count > 0)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout << count << "\n";
-    count--;
+  try {
+    std::cout << "-------- Start Timer --------\n";
+    int count = 60;
+    while (count > 0)
+    {
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      std::cout << count << "\n";
+      count--;
+      CheckExitFlag();
+    }
+    std::cout << "-------- End Timer --------\n";
+    running = false;
+  } catch (thread_aborted &e) {
+    std::cout << "You have forced the game to quit by pressing Ctrl+C." << "\n";
   }
-  std::cout << "-------- End Timer --------\n";
-  running = false;
 }
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
@@ -71,6 +87,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
     }
   }
 
+  StopCountdownTimerThread();
   t1.join();
   bgm.StopBgm();
 }
