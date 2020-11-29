@@ -1,6 +1,8 @@
 #include "renderer.h"
 #include <iostream>
+#include <sstream>
 #include <string>
+#include "SDL_ttf.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -31,6 +33,12 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
+
+  TTF_Init();
+  font = TTF_OpenFont("../ttf/OpenSans-Regular.ttf", 24);
+  if (font == NULL) {
+    std::cout << "TTF_FONT not found." << "\n";
+  }
 }
 
 Renderer::~Renderer() {
@@ -38,7 +46,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food) {
+void Renderer::Render(Snake const snake, SDL_Point const &food, int count) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -70,6 +78,18 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
   SDL_RenderFillRect(sdl_renderer, &block);
+
+  // Show the count at the top left of the screen
+  std::stringstream ss;
+  ss << count;
+  SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, ss.str().c_str(), White);
+  SDL_Texture* Message = SDL_CreateTextureFromSurface(sdl_renderer, surfaceMessage);
+  SDL_Rect Message_rect; //create a rect
+  Message_rect.x = 0;  //controls the rect's x coordinate
+  Message_rect.y = 0; // controls the rect's y coordinte
+  Message_rect.w = 100; // controls the width of the rect
+  Message_rect.h = 100; // controls the height of the rect
+  SDL_RenderCopy(sdl_renderer, Message, NULL, &Message_rect);
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);

@@ -5,6 +5,7 @@
 
 struct thread_aborted{};
 std::atomic<bool> exit_flag(false);
+int count{60};
 
 void CheckExitFlag() {
   if (exit_flag) throw thread_aborted{};
@@ -18,11 +19,10 @@ void CountdownTimer60Seconds(bool &running)
 {
   try {
     std::cout << "-------- Start Timer --------\n";
-    int count = 60;
     while (count > 0)
     {
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-      std::cout << count << "\n";
+      // std::cout << count << "\n";
       count--;
       CheckExitFlag();
     }
@@ -63,7 +63,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update(controller, renderer);
-    renderer.Render(snake, food);
+    renderer.Render(snake, food, count);
 
     frame_end = SDL_GetTicks();
 
@@ -134,3 +134,4 @@ void Game::Update(Controller &controller, Renderer &renderer) {
 
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
+int Game::GetCount() { return count; }
