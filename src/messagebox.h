@@ -7,7 +7,8 @@ class MessageBox
 {
   public:
     MessageBox();
-    int ShowScreen();
+    int ShowStartScreen();
+    int ShowContinueScreen();
 
   private:
     SDL_MessageBoxColorScheme colorScheme;

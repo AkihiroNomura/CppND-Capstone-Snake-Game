@@ -52,7 +52,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
   int frame_count = 0;
   bool running = true;
 
-  int pressed_button_number = messagebox.ShowScreen();
+  int pressed_button_number = messagebox.ShowStartScreen();
   if (pressed_button_number != 0) return;
 
   bgm.PlayBgm();
@@ -65,6 +65,17 @@ void Game::Run(Controller &controller, Renderer &renderer,
     controller.HandleInput(running, snake);
     Update(controller, renderer);
     renderer.Render(snake, food, obstacle, count);
+
+    if (!snake.alive)
+    {
+      int pressed_button_number = messagebox.ShowContinueScreen();
+      if (pressed_button_number == 1) break;
+      if (pressed_button_number == 0) {
+        PlaceFood();
+        PlaceObstacle();
+        snake.alive = true;
+      }
+    }
 
     frame_end = SDL_GetTicks();
 
@@ -135,6 +146,11 @@ void Game::Update(Controller &controller, Renderer &renderer) {
 
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
+
+  // Check if there's obstacle over here
+  if (obstacle.x == new_x && obstacle.y == new_y) {
+    snake.alive = false;
+  }
 
   // Check if there's food over here
   if (food.x == new_x && food.y == new_y) {
