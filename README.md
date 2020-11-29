@@ -16,7 +16,7 @@ In this project, I extended [Snake game sample code](https://github.com/udacity/
 - Gameover Message
   - You will see the gameover message if the snake hits an obstacle. You can choose `Continue` or `Quit`.
 - BGM
-  - The music will be played during gameplay.
+  - The music will be played during gameplay. I got wav file from [here](https://maoudamashii.jokersounds.com/list/bgm11.html).
 - Countdown Timer
   - You can play this game only for 60 seconds. You will see the countdown timer in the top left corner of the screen.
 
