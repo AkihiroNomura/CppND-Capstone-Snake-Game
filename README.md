@@ -61,9 +61,9 @@ In this project, I extended [Snake game sample code](https://github.com/udacity/
   * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
 * SDL2 >= 2.0
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
-  * Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.
+  * Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.  
   `apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev`
-  * Note that for Mac, you can use [Homebrew](https://brew.sh/) to install SDL2 packages.
+  * Note that for Mac, you can use [Homebrew](https://brew.sh/) to install SDL2 packages.  
   `brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer`
 * gcc/g++ >= 5.4
   * Linux: gcc / g++ is installed by default on most Linux distros
