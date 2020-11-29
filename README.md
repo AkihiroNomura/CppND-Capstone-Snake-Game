@@ -77,7 +77,7 @@ In this project, I extended [Snake game sample code](https://github.com/udacity/
 3. Compile: `cmake .. && make`
 4. Run it: `./SnakeGame`.
 
-## Rubic Criteria
+## Rubric Criteria
 I believe that I met at least the following 6 criteria.
 
 ### Loops, Functions, I/O
