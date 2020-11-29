@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 #include <thread>
+#include <atomic>
 #include "SDL.h"
 
 struct thread_aborted{};
