@@ -39,6 +39,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       random_w(0, static_cast<int>(grid_width)),
       random_h(0, static_cast<int>(grid_height)) {
   PlaceFood();
+  PlaceObstacle();
 }
 
 void Game::Run(Controller &controller, Renderer &renderer,
@@ -63,7 +64,7 @@ void Game::Run(Controller &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update(controller, renderer);
-    renderer.Render(snake, food, count);
+    renderer.Render(snake, food, obstacle, count);
 
     frame_end = SDL_GetTicks();
 
@@ -107,6 +108,19 @@ void Game::PlaceFood() {
   }
 }
 
+void Game::PlaceObstacle() {
+  int x, y;
+  while (true) {
+    x = random_w(engine);
+    y = random_h(engine);
+    if (!snake.SnakeCell(x, y) && food.x != x && food.y != y) {
+      obstacle.x = x;
+      obstacle.y = y;
+      return;
+    }
+  }
+}
+
 void Game::Update(Controller &controller, Renderer &renderer) {
   if (!snake.alive) return;
 
@@ -126,6 +140,7 @@ void Game::Update(Controller &controller, Renderer &renderer) {
   if (food.x == new_x && food.y == new_y) {
     score++;
     PlaceFood();
+    PlaceObstacle();
     // Grow snake and increase speed.
     snake.GrowBody();
     snake.speed += 0.02;
